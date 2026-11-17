@@ -1,6 +1,8 @@
 // SWAAD EXPRESS CART AND BILL LOGIC
 // The cart is a plain object: { dishId: quantity }.
 
+const GST_RATE = 0.05;   // Restaurant GST: 5%
+
 const MAX_PER_DISH = 10;   // F2 will lower this to 10 (kitchen capacity)
 
 // "₹249" -> 249
@@ -36,7 +38,9 @@ function cartTotal(cart, menu) {
 // The bill. For now: food total only. (CR2 adds GST to this function.)
 function billSummary(cart, menu) {
   const food = cartTotal(cart, menu);
-  return { food: food, total: food };
+  const gst = Math.round(food * GST_RATE * 100) / 100;
+  const total = Math.round((food + gst) * 100) / 100;
+  return { food: food, gstRate: GST_RATE, gst: gst, total: total };
 }
 
 if (typeof module !== "undefined") {
