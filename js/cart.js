@@ -37,8 +37,10 @@ const GST_RATE = 0.05;   // restaurant GST rate (5%)
 
 function billSummary(cart, menu) {
   const food = cartTotal(cart, menu);
+  const gstRate = GST_RATE;
   const gst = Math.round(food * GST_RATE * 100) / 100;
-
+  const total = Math.round((food + gst) * 100) / 100;
+  return { food, gstRate, gst, total };
 }
 
 if (typeof module !== "undefined") {
